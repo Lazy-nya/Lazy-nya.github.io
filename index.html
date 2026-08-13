@@ -238,7 +238,7 @@
       <h3 style="color:#5d4e3c; text-align:center;"><i class="fa-solid fa-pen-to-square"></i> 设置 / 编辑资料</h3>
       
       <label>📷 头像上传 (外部路径/文件)</label>
-      <input type="text" id="editAvatarUrl" placeholder="src="images/115237913_p0.jpg"">
+      <input type="text" id="editAvatarUrl" placeholder="输入头像图片URL (优先于上传)">
       <input type="file" id="editAvatarUpload" accept="image/*">
       <img id="editAvatarPreview" class="image-preview" src="" alt="头像预览" style="display:none;">
       <button class="btn" id="resetAvatarInEditor">重置为默认头像</button>
@@ -299,14 +299,14 @@
         info1: "1月10日 · 摩羯座",
         info2: "喵星",
         info3: "编程 / 音游",
-        about: "谢谢关注纸柚喵(づ^で) ",
+        about: "谢谢关注纸柚喵(つ^_^) ",
         bili: "https://space.bilibili.com/626182490",
         github: "https://github.com/Lazy-nya",
         douyin: "https://www.douyin.com/user/MS4wLjABAAAAEJbVZqrpr7FPrlIZeS0d_CcpSjq2rZf1u3PebDUBKPA?from_tab_name=main",
         coolapk: "https://www.coolapk.com/u/41854903",
-        avatar: null,
-        bgImage: null,
-        bgColor: "#d9cdbf",
+        avatar: "images/115237913_p0.jpg",
+        bgImage: "images/115237913_p2.jpg",  // <--- 修改这里：指定背景图片路径
+        bgColor: null,  // 背景图片优先，设为 null
         musicName: "未选择音乐",
         musicSrc: null
       };
@@ -327,7 +327,7 @@
       const douyinLink = document.getElementById('douyinLink');
       const coolapkLink = document.getElementById('coolapkLink');
       
-      const audioPlayer = document.getElementById('audioPlayer'); // 现在可以正常获取了
+      const audioPlayer = document.getElementById('audioPlayer');
       const playPauseBtn = document.getElementById('playPauseBtn');
       const musicInfo = document.getElementById('musicInfo');
       
