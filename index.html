@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <title>✨ 纸喵柚·个人介绍(づ^で) </title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: 'Quicksand', 'Zen Maru Gothic', sans-serif;
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:1.5rem;
+      background-color:#cfc1b3;
+      transition:background-color 0.4s;
+      position:relative;
+    }
+    .bg-layer {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      z-index:-2;
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      background-color:#c9b8a8;
+      transition:0.4s;
+    }
+    .morandi-overlay {
+      position:fixed;
+      top:0; left:0;
+      width:100%; height:100%;
+      background:rgba(240,232,220,0.25);
+      backdrop-filter:saturate(0.7) brightness(1.04);
+      z-index:-1;
+      pointer-events:none;
+    }
+    .glass-card {
+      max-width:720px;
+      width:100%;
+      background:rgba(255,250,245,0.25);
+      backdrop-filter:blur(24px);
+      -webkit-backdrop-filter:blur(24px);
+      border-radius:3.5rem;
+      padding:2.2rem 2rem;
+      box-shadow:0 25px 45px rgba(120,100,80,0.2), inset 0 1px 10px rgba(255,255,255,0.5);
+      border:1px solid rgba(255,245,235,0.5);
+      color:#5d4e40;
+      position:relative;
+      z-index:2;
+    }
+    .glass-card::before { content:"✧･ﾟ: *✧･ﾟ:*"; position:absolute; top:15px; left:30px; font-size:0.9rem; color:rgba(190,160,135,0.8); letter-spacing:2px; }
+    .glass-card::after { content:"＊*•̩̩͙✩•̩̩͙*˚"; position:absolute; bottom:15px; right:30px; font-size:0.9rem; color:rgba(175,150,130,0.8); }
+    
+    .datetime-corner {
+      position:absolute;
+      top:18px;
+      left:30px;
+      font-size:0.75rem;
+      color:rgba(130,110,90,0.7);
+      background:rgba(240,228,210,0.35);
+      backdrop-filter:blur(4px);
+      padding:0.2rem 0.9rem;
+      border-radius:2rem;
+      border:1px solid rgba(230,210,185,0.3);
+      letter-spacing:0.3px;
+      font-weight:500;
+      z-index:5;
+    }
+    .settings-corner {
+      position:absolute;
+      top:16px;
+      right:24px;
+      z-index:5;
+    }
+    .settings-corner .btn {
+      background:rgba(240,228,210,0.5);
+      backdrop-filter:blur(8px);
+      border:1px solid rgba(230,210,185,0.5);
+      border-radius:2.5rem;
+      padding:0.35rem 1.1rem;
+      font-size:0.85rem;
+      color:#5d4a33;
+      box-shadow:0 4px 10px rgba(0,0,0,0.03);
+    }
+    .settings-corner .btn i { margin-right:4px; }
+    .settings-corner .btn:hover { background:rgba(215,185,150,0.6); }
+
+    .avatar-section { display:flex; flex-direction:column; align-items:center; margin-top:0.8rem; margin-bottom:0.8rem; }
+    .avatar-wrapper { position:relative; width:125px; height:125px; margin-bottom:0.6rem; }
+    .avatar-frame {
+      width:100%; height:100%;
+      border-radius:50%;
+      background:rgba(235,220,205,0.5);
+      backdrop-filter:blur(12px);
+      box-shadow:0 8px 18px rgba(130,110,90,0.25), inset 0 0 12px rgba(255,250,240,0.7);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      overflow:hidden;
+      border:2px solid rgba(255,250,240,0.7);
+    }
+    .avatar-img { width:100%; height:100%; object-fit:cover; display:block; }
+    .avatar-placeholder { font-size:4rem; color:#b7a28b; display:none; align-items:center; justify-content:center; width:100%; height:100%; background:rgba(240,228,210,0.5); }
+    .nickname { font-size:2rem; font-weight:700; color:#5f4e3c; text-shadow:1px 1px 0 rgba(255,245,230,0.7); }
+    .bio { color:#7b6a58; background:rgba(240,225,205,0.5); backdrop-filter:blur(5px); padding:0.3rem 1.8rem; border-radius:2rem; margin:0.4rem 0 0.2rem 0; }
+
+/* 完全统一外观，仅保留布局间距差异 */
+.info-item,
+.about-me,
+.music-player {
+  background: rgba(250,242,230,0.45);
+  backdrop-filter: blur(10px);
+  padding: 0.7rem 1rem;
+  display: flex;
+  align-items: center;
+  height: 3.2rem;
+  border-radius: 2rem;
+  border: 1px solid rgba(230,210,185,0.7);
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.8rem;
+  margin: 0.4rem 0 0.4rem 0;
+}
+
+.info-item {
+  gap: 0.5rem;
+}
+.info-item.hidden-placeholder {
+  display: none;
+}
+
+.about-me {
+  margin: 0 0 0.4rem 0;
+  justify-content: center;
+  /* 取消虚线，和其他方块边框一致 */
+  border-style: solid;
+}
+
+.music-player {
+  margin: 0 0 0.5rem 0;
+  gap: 0.8rem;
+}
+
+    .music-btn { background:rgba(225,205,175,0.7); border:none; width:38px; height:38px; border-radius:50%; color:#4f4232; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .music-info { flex:1; font-size:0.85rem; color:#5d4e3a; }
+    .social-links { display:flex; justify-content:center; gap:1.5rem; margin:1.2rem 0 0.2rem 0; }
+    .social-link { background:rgba(240,228,210,0.6); backdrop-filter:blur(12px); width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#5d4a33; text-decoration:none; border:1px solid rgba(250,240,220,0.7); transition:0.25s; }
+    .social-link:hover { background:rgba(215,185,150,0.7); transform:translateY(-3px); }
+    .btn { background:rgba(225,205,180,0.65); backdrop-filter:blur(8px); border:none; padding:0.5rem 1.2rem; border-radius:2rem; font-weight:600; color:#4b3c2c; cursor:pointer; display:inline-flex; align-items:center; gap:0.3rem; border:1px solid rgba(255,250,235,0.6); }
+    .btn:hover { background:rgba(200,170,140,0.7); }
+    .hidden-input { display:none; }
+    .modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.4); backdrop-filter:blur(6px); display:flex; align-items:center; justify-content:center; z-index:99; visibility:hidden; opacity:0; transition:0.2s; }
+    .modal-overlay.active { visibility:visible; opacity:1; }
+    .modal-box { background:rgba(255,248,240,0.85); backdrop-filter:blur(20px); border-radius:2.5rem; padding:2rem; max-width:500px; width:90%; text-align:center; border:1px solid rgba(220,190,160,0.7); max-height:85vh; overflow-y:auto; }
+    .modal-box input, .modal-box textarea { width:100%; padding:0.8rem; border-radius:2rem; border:1px solid #cfbca7; background:rgba(255,255,250,0.7); margin:0.5rem 0; font-family:inherit; }
+    .modal-box label { display:block; text-align:left; margin-top:0.5rem; color:#5d4e3c; font-weight:600; font-size:0.9rem; }
+    .image-preview { width:80px; height:80px; border-radius:50%; object-fit:cover; margin:0.5rem auto; display:block; border:2px solid rgba(200,170,140,0.6); }
+    .reset-btn-wrapper { margin-top:1.2rem; display:flex; justify-content:center; gap:0.8rem; flex-wrap:wrap; }
+    @media (max-width:500px) { .info-grid { grid-template-columns:1fr; } }
+  </style>
+</head>
+<body>
+  <div class="bg-layer" id="bgLayer"></div>
+  <div class="morandi-overlay"></div>
+
+  <div class="glass-card" id="glassCard">
+    <div class="datetime-corner" id="datetimeDisplay">----年--月--日 --:--</div>
+    <div class="settings-corner">
+      <button class="btn" id="openSettingsBtn"><i class="fa-solid fa-gear"></i> 设置</button>
+    </div>
+
+    <div class="avatar-section">
+      <div class="avatar-wrapper">
+        <div class="avatar-frame">
+          <img id="avatarImage" class="avatar-img" src="" alt="头像">
+          <div class="avatar-placeholder" id="avatarPlaceholder"><i class="fa-solid fa-cat"></i></div>
+        </div>
+      </div>
+      <div class="nickname" id="displayNickname">纸柚 喵</div>
+      <div class="bio" id="displayBio">✦ 一只笨喵喵 ✦</div>
+    </div>
+
+    <!-- 爱好信息网格：上边距已缩小至0.5rem，与简介贴近 -->
+    <div class="info-grid">
+      <div class="info-item"><i class="fa-solid fa-cake-candles"></i> <span id="info1">1月10日 · 摩羯座</span></div>
+      <div class="info-item"><i class="fa-solid fa-location-dot"></i> <span id="info2">喵星</span></div>
+      <div class="info-item"><i class="fa-solid fa-laptop-code"></i> <span id="info3">编程 / 音游</span></div>
+      <div class="info-item hidden-placeholder"></div>
+    </div>
+    
+    <!-- 关于我：与info-grid底部间距0.9rem -->
+    <div class="about-me" id="displayAbout">谢谢关注纸柚喵(つ^_^) </div>
+
+    <!-- 音乐播放器 -->
+    <div class="music-player">
+      <button class="music-btn" id="playPauseBtn"><i class="fa-solid fa-play"></i></button>
+      <div class="music-info" id="musicInfo">未选择音乐</div>
+    </div>
+
+    <div class="social-links">
+      <a href="#" target="_blank" class="social-link" id="bilibiliLink"><i class="fa-brands fa-bilibili"></i></a>
+      <a href="#" target="_blank" class="social-link" id="githubLink"><i class="fa-brands fa-github"></i></a>
+      <a href="#" target="_blank" class="social-link" id="douyinLink"><i class="fa-brands fa-tiktok"></i></a>
+      <a href="#" target="_blank" class="social-link" id="coolapkLink"><i class="fa-solid fa-mobile-screen-button"></i></a>
+    </div>
+  </div>
+
+  <!-- 新增的 audio 标签 (关键修复) -->
+  <audio id="audioPlayer" style="display:none;"></audio>
+
+  <!-- 密码弹窗 -->
+  <div class="modal-overlay" id="passwordModal">
+    <div class="modal-box">
+      <h3 style="color:#5d4e3c;"><i class="fa-solid fa-key"></i> 管理员验证</h3>
+      <input type="password" id="passwordInput" placeholder="请输入后台密码">
+      <div style="display:flex; gap:1rem; justify-content:center; margin-top:1rem;">
+        <button class="btn" id="confirmPasswordBtn">确认</button>
+        <button class="btn" id="cancelPasswordBtn">取消</button>
+      </div>
+      <p style="font-size:0.7rem; margin-top:0.5rem; color:#8b7a6b;">密码提示:你猜喵(づ^で) </p>
+    </div>
+  </div>
+
+  <!-- 编辑弹窗 -->
+  <div class="modal-overlay" id="editorModal">
+    <div class="modal-box" style="text-align:left;">
+      <h3 style="color:#5d4e3c; text-align:center;"><i class="fa-solid fa-pen-to-square"></i> 设置 / 编辑资料</h3>
+      
+      <label>📷 头像上传 (外部路径/文件)</label>
+      <input type="text" id="editAvatarUrl" placeholder="输入头像图片URL (优先于上传)">
+      <input type="file" id="editAvatarUpload" accept="image/*">
+      <img id="editAvatarPreview" class="image-preview" src="" alt="头像预览" style="display:none;">
+      <button class="btn" id="resetAvatarInEditor">重置为默认头像</button>
+      
+      <label>🖼️ 背景设置 (外部路径/文件)</label>
+      <input type="text" id="editBgUrl" placeholder="输入背景图片URL (优先于上传)">
+      <div style="display:flex; gap:0.5rem; flex-wrap:wrap;">
+        <input type="file" id="editBgUpload" accept="image/*" style="display:none;">
+        <label for="editBgUpload" class="btn"><i class="fa-solid fa-image"></i> 背景图片</label>
+        <button class="btn" id="editRandomBgBtn"><i class="fa-solid fa-shuffle"></i> 随机色</button>
+        <button class="btn" id="editResetBgBtn"><i class="fa-solid fa-rotate-left"></i> 默认背景</button>
+      </div>
+      
+      <label>✨ 昵称</label>
+      <input type="text" id="editNickname">
+      <label>💬 简介</label>
+      <input type="text" id="editBio">
+      <label>🎂 信息1</label>
+      <input type="text" id="editInfo1">
+      <label>📍 信息2</label>
+      <input type="text" id="editInfo2">
+      <label>❤️ 信息3</label>
+      <input type="text" id="editInfo3">
+      <label>📝 关于我</label>
+      <textarea id="editAbout" rows="2"></textarea>
+      <label>🔗 B站</label>
+      <input type="text" id="editBili" value="https://space.bilibili.com/626182490">
+      <label>🔗 GitHub</label>
+      <input type="text" id="editGithub" value="https://github.com/Lazy-nya">
+      <label>📱 抖音</label>
+      <input type="text" id="editDouyin" value="https://www.douyin.com/user/MS4wLjABAAAAEJbVZqrpr7FPrlIZeS0d_CcpSjq2rZf1u3PebDUBKPA?from_tab_name=main">
+      <label>📱 酷安</label>
+      <input type="text" id="editCoolapk" value="https://www.coolapk.com/u/41854903">
+
+      <label>🎵 音乐设置</label>
+      <input type="text" id="editMusicName" placeholder="音乐显示名称">
+      <input type="file" id="editMusicUpload" accept="audio/*" style="margin-top:0.3rem;">
+      
+      <div class="reset-btn-wrapper">
+        <button class="btn" id="resetAllBtn" style="background:rgba(200,170,140,0.7);"><i class="fa-solid fa-trash"></i> 恢复默认</button>
+      </div>
+
+      <div style="display:flex; gap:1rem; justify-content:center; margin-top:1.5rem;">
+        <button class="btn" id="saveEditBtn"><i class="fa-solid fa-floppy-disk"></i> 保存并关闭</button>
+        <button class="btn" id="closeEditorBtn">关闭 (自动保存)</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const ADMIN_PASSWORD = "17701";
+      const STORAGE_KEY = "morandi_profile_data_v2";
+      
+      const defaultData = {
+        nickname: "纸柚 喵",
+        bio: "✦ 一只笨喵喵 ✦",
+        info1: "1月10日 · 摩羯座",
+        info2: "喵星",
+        info3: "编程 / 音游",
+        about: "谢谢关注纸柚喵(づ^で) ",
+        bili: "https://space.bilibili.com/626182490",
+        github: "https://github.com/Lazy-nya",
+        douyin: "https://www.douyin.com/user/MS4wLjABAAAAEJbVZqrpr7FPrlIZeS0d_CcpSjq2rZf1u3PebDUBKPA?from_tab_name=main",
+        coolapk: "https://www.coolapk.com/u/41854903",
+        avatar: null,
+        bgImage: null,
+        bgColor: "#d9cdbf",
+        musicName: "未选择音乐",
+        musicSrc: null
+      };
+
+      let profileData = {};
+      
+      const bgLayer = document.getElementById('bgLayer');
+      const avatarImage = document.getElementById('avatarImage');
+      const avatarPlaceholder = document.getElementById('avatarPlaceholder');
+      const displayNickname = document.getElementById('displayNickname');
+      const displayBio = document.getElementById('displayBio');
+      const info1 = document.getElementById('info1');
+      const info2 = document.getElementById('info2');
+      const info3 = document.getElementById('info3');
+      const displayAbout = document.getElementById('displayAbout');
+      const bilibiliLink = document.getElementById('bilibiliLink');
+      const githubLink = document.getElementById('githubLink');
+      const douyinLink = document.getElementById('douyinLink');
+      const coolapkLink = document.getElementById('coolapkLink');
+      
+      const audioPlayer = document.getElementById('audioPlayer'); // 现在可以正常获取了
+      const playPauseBtn = document.getElementById('playPauseBtn');
+      const musicInfo = document.getElementById('musicInfo');
+      
+      const passwordModal = document.getElementById('passwordModal');
+      const passwordInput = document.getElementById('passwordInput');
+      const editorModal = document.getElementById('editorModal');
+      
+      const editAvatarUpload = document.getElementById('editAvatarUpload');
+      const editAvatarUrl = document.getElementById('editAvatarUrl');
+      const editAvatarPreview = document.getElementById('editAvatarPreview');
+      const editBgUpload = document.getElementById('editBgUpload');
+      const editBgUrl = document.getElementById('editBgUrl');
+      const editNickname = document.getElementById('editNickname');
+      const editBio = document.getElementById('editBio');
+      const editInfo1 = document.getElementById('editInfo1');
+      const editInfo2 = document.getElementById('editInfo2');
+      const editInfo3 = document.getElementById('editInfo3');
+      const editAbout = document.getElementById('editAbout');
+      const editBili = document.getElementById('editBili');
+      const editGithub = document.getElementById('editGithub');
+      const editDouyin = document.getElementById('editDouyin');
+      const editCoolapk = document.getElementById('editCoolapk');
+      const editMusicName = document.getElementById('editMusicName');
+      const editMusicUpload = document.getElementById('editMusicUpload');
+      const resetAllBtn = document.getElementById('resetAllBtn');
+
+      function updateDateTime() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const hours = String(now.getHours()).padStart(2, '0');
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        document.getElementById('datetimeDisplay').textContent = `${year}年${month}月${day}日 ${hours}:${minutes}`;
+      }
+      updateDateTime();
+      setInterval(updateDateTime, 10000);
+
+      function loadProfile() {
+        const stored = localStorage.getItem(STORAGE_KEY);
+        if (stored) {
+          try { profileData = JSON.parse(stored); } catch(e) { profileData = {...defaultData}; }
+        } else {
+          profileData = {...defaultData};
+        }
+        applyProfileToUI();
+      }
+      
+      function saveProfileToStorage() { localStorage.setItem(STORAGE_KEY, JSON.stringify(profileData)); }
+      
+      function applyProfileToUI() {
+        displayNickname.textContent = profileData.nickname || defaultData.nickname;
+        displayBio.textContent = profileData.bio || defaultData.bio;
+        info1.textContent = profileData.info1 || defaultData.info1;
+        info2.textContent = profileData.info2 || defaultData.info2;
+        info3.textContent = profileData.info3 || defaultData.info3;
+        displayAbout.textContent = profileData.about || defaultData.about;
+        bilibiliLink.href = profileData.bili || defaultData.bili;
+        githubLink.href = profileData.github || defaultData.github;
+        douyinLink.href = profileData.douyin || defaultData.douyin;
+        coolapkLink.href = profileData.coolapk || defaultData.coolapk;
+        
+        if (profileData.avatar) {
+          avatarImage.src = profileData.avatar;
+          avatarImage.style.display = 'block';
+          avatarPlaceholder.style.display = 'none';
+        } else {
+          avatarImage.src = '';
+          avatarImage.style.display = 'none';
+          avatarPlaceholder.style.display = 'flex';
+        }
+        
+        if (profileData.bgImage) {
+          bgLayer.style.backgroundImage = `url('${profileData.bgImage}')`;
+          bgLayer.style.backgroundColor = 'transparent';
+        } else {
+          bgLayer.style.backgroundImage = 'none';
+          bgLayer.style.backgroundColor = profileData.bgColor || defaultData.bgColor;
+        }
+        
+        musicInfo.textContent = profileData.musicName || "未选择音乐";
+        if (profileData.musicSrc) {
+          audioPlayer.src = profileData.musicSrc;
+        } else {
+          audioPlayer.src = '';
+        }
+      }
+      
+      function populateEditor() {
+        editNickname.value = profileData.nickname || '';
+        editBio.value = profileData.bio || '';
+        editInfo1.value = profileData.info1 || '';
+        editInfo2.value = profileData.info2 || '';
+        editInfo3.value = profileData.info3 || '';
+        editAbout.value = profileData.about || '';
+        editBili.value = profileData.bili || '';
+        editGithub.value = profileData.github || '';
+        editDouyin.value = profileData.douyin || '';
+        editCoolapk.value = profileData.coolapk || '';
+        editMusicName.value = profileData.musicName || '';
+        editAvatarUrl.value = '';
+        editBgUrl.value = '';
+        if (profileData.avatar) {
+          editAvatarPreview.src = profileData.avatar;
+          editAvatarPreview.style.display = 'block';
+        } else {
+          editAvatarPreview.style.display = 'none';
+        }
+      }
+      
+      function resetAllToDefault() {
+        if(confirm('确定要恢复所有内容到默认状态吗？')) {
+          profileData = {...defaultData};
+          saveProfileToStorage();
+          applyProfileToUI();
+          alert('已恢复默认 ✦');
+          populateEditor();
+        }
+      }
+      
+      function bindEditorInputs() {
+        const fields = [
+          { input: editNickname, key: 'nickname' },
+          { input: editBio, key: 'bio' },
+          { input: editInfo1, key: 'info1' },
+          { input: editInfo2, key: 'info2' },
+          { input: editInfo3, key: 'info3' },
+          { input: editAbout, key: 'about' },
+          { input: editBili, key: 'bili' },
+          { input: editGithub, key: 'github' },
+          { input: editDouyin, key: 'douyin' },
+          { input: editCoolapk, key: 'coolapk' },
+          { input: editMusicName, key: 'musicName' }
+        ];
+        fields.forEach(({input, key}) => {
+          input.addEventListener('input', () => {
+            profileData[key] = input.value;
+            saveProfileToStorage();
+            applyProfileToUI();
+          });
+        });
+      }
+
+      function handleExternalUrl() {
+        if (editAvatarUrl.value.trim()) {
+          const url = editAvatarUrl.value.trim();
+          profileData.avatar = url;
+          editAvatarPreview.src = url;
+          editAvatarPreview.style.display = 'block';
+          saveProfileToStorage();
+          applyProfileToUI();
+          editAvatarUrl.value = '';
+        }
+        if (editBgUrl.value.trim()) {
+          const url = editBgUrl.value.trim();
+          profileData.bgImage = url;
+          profileData.bgColor = null;
+          saveProfileToStorage();
+          applyProfileToUI();
+          editBgUrl.value = '';
+        }
+      }
+      
+      function initEvents() {
+        document.getElementById('openSettingsBtn').addEventListener('click', ()=> passwordModal.classList.add('active'));
+        
+        document.getElementById('confirmPasswordBtn').addEventListener('click', ()=>{
+          if(passwordInput.value === ADMIN_PASSWORD) {
+            passwordModal.classList.remove('active');
+            passwordInput.value = '';
+            populateEditor();
+            editorModal.classList.add('active');
+          } else {
+            alert('密码错误！');
+          }
+        });
+        document.getElementById('cancelPasswordBtn').addEventListener('click', ()=> passwordModal.classList.remove('active'));
+        
+        document.getElementById('saveEditBtn').addEventListener('click', ()=> {
+          handleExternalUrl();
+          saveProfileToStorage();
+          applyProfileToUI();
+          editorModal.classList.remove('active');
+        });
+        document.getElementById('closeEditorBtn').addEventListener('click', ()=> {
+          handleExternalUrl();
+          saveProfileToStorage();
+          applyProfileToUI();
+          editorModal.classList.remove('active');
+        });
+        
+        resetAllBtn.addEventListener('click', resetAllToDefault);
+        
+        editAvatarUpload.addEventListener('change', (e)=>{
+          if(e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (ev)=>{
+              profileData.avatar = ev.target.result;
+              editAvatarPreview.src = ev.target.result;
+              editAvatarPreview.style.display = 'block';
+              saveProfileToStorage();
+              applyProfileToUI();
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
+        });
+        editAvatarUrl.addEventListener('change', ()=>{
+          if(editAvatarUrl.value.trim()) {
+            const url = editAvatarUrl.value.trim();
+            profileData.avatar = url;
+            editAvatarPreview.src = url;
+            editAvatarPreview.style.display = 'block';
+            saveProfileToStorage();
+            applyProfileToUI();
+            editAvatarUrl.value = '';
+          }
+        });
+        document.getElementById('resetAvatarInEditor').addEventListener('click', ()=>{
+          profileData.avatar = null;
+          editAvatarPreview.style.display = 'none';
+          saveProfileToStorage();
+          applyProfileToUI();
+        });
+        
+        editBgUpload.addEventListener('change', (e)=>{
+          if(e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (ev)=>{
+              profileData.bgImage = ev.target.result;
+              profileData.bgColor = null;
+              saveProfileToStorage();
+              applyProfileToUI();
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
+        });
+        editBgUrl.addEventListener('change', ()=>{
+          if(editBgUrl.value.trim()) {
+            const url = editBgUrl.value.trim();
+            profileData.bgImage = url;
+            profileData.bgColor = null;
+            saveProfileToStorage();
+            applyProfileToUI();
+            editBgUrl.value = '';
+          }
+        });
+        document.getElementById('editRandomBgBtn').addEventListener('click', ()=>{
+          const colors = ["#d4c5b9","#cbb9a7","#b7a393","#c7b8a8","#d9cdbf","#c1aca0","#cfbdae","#d2c1b0"];
+          profileData.bgColor = colors[Math.floor(Math.random()*colors.length)];
+          profileData.bgImage = null;
+          saveProfileToStorage();
+          applyProfileToUI();
+        });
+        document.getElementById('editResetBgBtn').addEventListener('click', ()=>{
+          profileData.bgColor = defaultData.bgColor;
+          profileData.bgImage = null;
+          saveProfileToStorage();
+          applyProfileToUI();
+        });
+        
+        editMusicUpload.addEventListener('change', (e)=>{
+          if(e.target.files[0]) {
+            const file = e.target.files[0];
+            const url = URL.createObjectURL(file);
+            profileData.musicSrc = url;
+            profileData.musicName = file.name;
+            musicInfo.textContent = profileData.musicName;
+            audioPlayer.src = url;
+            saveProfileToStorage();
+            applyProfileToUI();
+          }
+        });
+        
+        playPauseBtn.addEventListener('click', ()=>{
+          if(!audioPlayer.src) return alert('请先在设置中导入音乐');
+          if(audioPlayer.paused) { audioPlayer.play(); playPauseBtn.innerHTML='<i class="fa-solid fa-pause"></i>'; }
+          else { audioPlayer.pause(); playPauseBtn.innerHTML='<i class="fa-solid fa-play"></i>'; }
+        });
+        audioPlayer.addEventListener('ended', ()=>{
+          playPauseBtn.innerHTML='<i class="fa-solid fa-play"></i>';
+        });
+      }
+      
+      loadProfile();
+      bindEditorInputs();
+      initEvents();
+    })();
+  </script>
+</body>
+</html>
