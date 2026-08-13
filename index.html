@@ -112,47 +112,46 @@
     .nickname { font-size:2rem; font-weight:700; color:#5f4e3c; text-shadow:1px 1px 0 rgba(255,245,230,0.7); }
     .bio { color:#7b6a58; background:rgba(240,225,205,0.5); backdrop-filter:blur(5px); padding:0.3rem 1.8rem; border-radius:2rem; margin:0.4rem 0 0.2rem 0; }
 
-/* 完全统一外观，仅保留布局间距差异 */
-.info-item,
-.about-me,
-.music-player {
-  background: rgba(250,242,230,0.45);
-  backdrop-filter: blur(10px);
-  padding: 0.7rem 1rem;
-  display: flex;
-  align-items: center;
-  height: 3.2rem;
-  border-radius: 2rem;
-  border: 1px solid rgba(230,210,185,0.7);
-}
+    .info-item,
+    .about-me,
+    .music-player {
+      background: rgba(250,242,230,0.45);
+      backdrop-filter: blur(10px);
+      padding: 0.7rem 1rem;
+      display: flex;
+      align-items: center;
+      height: 3.2rem;
+      border-radius: 2rem;
+      border: 1px solid rgba(230,210,185,0.7);
+    }
 
-.info-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.8rem;
-  margin: 0.4rem 0 0.4rem 0;
-}
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin: 0.4rem 0 0.4rem 0;
+    }
 
-.info-item {
-  gap: 0.5rem;
-}
-.info-item.hidden-placeholder {
-  display: none;
-}
+    .info-item {
+      gap: 0.5rem;
+    }
+    .info-item.hidden-placeholder {
+      display: none;
+    }
 
-.about-me {
-  margin: 0 0 0.4rem 0;
-  justify-content: center;
-  /* 取消虚线，和其他方块边框一致 */
-  border-style: solid;
-}
+    .about-me {
+      margin: 0 0 0.4rem 0;
+      justify-content: center;
+      border-style: solid;
+    }
 
-.music-player {
-  margin: 0 0 0.5rem 0;
-  gap: 0.8rem;
-}
+    .music-player {
+      margin: 0 0 0.5rem 0;
+      gap: 0.8rem;
+    }
 
     .music-btn { background:rgba(225,205,175,0.7); border:none; width:38px; height:38px; border-radius:50%; color:#4f4232; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+    .music-btn:hover { background:rgba(200,175,145,0.8); transform:scale(1.05); transition:0.2s; }
     .music-info { flex:1; font-size:0.85rem; color:#5d4e3a; }
     .social-links { display:flex; justify-content:center; gap:1.5rem; margin:1.2rem 0 0.2rem 0; }
     .social-link { background:rgba(240,228,210,0.6); backdrop-filter:blur(12px); width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.5rem; color:#5d4a33; text-decoration:none; border:1px solid rgba(250,240,220,0.7); transition:0.25s; }
@@ -191,7 +190,6 @@
       <div class="bio" id="displayBio">✦ 一只笨喵喵 ✦</div>
     </div>
 
-    <!-- 爱好信息网格：上边距已缩小至0.5rem，与简介贴近 -->
     <div class="info-grid">
       <div class="info-item"><i class="fa-solid fa-cake-candles"></i> <span id="info1">1月10日 · 摩羯座</span></div>
       <div class="info-item"><i class="fa-solid fa-location-dot"></i> <span id="info2">喵星</span></div>
@@ -199,13 +197,27 @@
       <div class="info-item hidden-placeholder"></div>
     </div>
     
-    <!-- 关于我：与info-grid底部间距0.9rem -->
     <div class="about-me" id="displayAbout">谢谢关注纸柚喵(つ^_^) </div>
 
-    <!-- 音乐播放器 -->
+    <!-- 音乐播放器 - 网易云驱动（样式完全保留） -->
     <div class="music-player">
+      <!-- 网易云播放器（隐藏，只作为音频源） -->
+      <iframe 
+        id="neteasePlayer"
+        frameborder="no" 
+        border="0" 
+        marginwidth="0" 
+        marginheight="0" 
+        width="0" 
+        height="0" 
+        src="https://music.163.com/outchain/player?type=2&id=2098473570&auto=0&height=32" 
+        style="display: none;"
+        allow="autoplay"
+      ></iframe>
+      
+      <!-- 自定义控制按钮和信息 -->
       <button class="music-btn" id="playPauseBtn"><i class="fa-solid fa-play"></i></button>
-      <div class="music-info" id="musicInfo">未选择音乐</div>
+      <div class="music-info" id="musicInfo">Water Drop - KARUT</div>
     </div>
 
     <div class="social-links">
@@ -215,9 +227,6 @@
       <a href="#" target="_blank" class="social-link" id="coolapkLink"><i class="fa-solid fa-mobile-screen-button"></i></a>
     </div>
   </div>
-
-  <!-- 新增的 audio 标签 (关键修复) -->
-  <audio id="audioPlayer" style="display:none;"></audio>
 
   <!-- 密码弹窗 -->
   <div class="modal-overlay" id="passwordModal">
@@ -273,9 +282,12 @@
       <label>📱 酷安</label>
       <input type="text" id="editCoolapk" value="https://www.coolapk.com/u/41854903">
 
-      <label>🎵 音乐设置</label>
-      <input type="text" id="editMusicName" placeholder="音乐显示名称">
-      <input type="file" id="editMusicUpload" accept="audio/*" style="margin-top:0.3rem;">
+      <label>🎵 音乐设置（网易云）</label>
+      <input type="text" id="editMusicId" placeholder="输入网易云歌曲ID（如：2098473570）">
+      <input type="text" id="editMusicName" placeholder="音乐显示名称（如：Water Drop - KARUT）" style="margin-top:0.3rem;">
+      <div style="font-size:0.75rem; color:#8b7a6b; margin-top:-0.2rem; margin-bottom:0.3rem;">
+        💡 在网易云音乐网页版打开歌曲，地址栏中 id= 后面的数字就是歌曲ID
+      </div>
       
       <div class="reset-btn-wrapper">
         <button class="btn" id="resetAllBtn" style="background:rgba(200,170,140,0.7);"><i class="fa-solid fa-trash"></i> 恢复默认</button>
@@ -305,10 +317,11 @@
         douyin: "https://www.douyin.com/user/MS4wLjABAAAAEJbVZqrpr7FPrlIZeS0d_CcpSjq2rZf1u3PebDUBKPA?from_tab_name=main",
         coolapk: "https://www.coolapk.com/u/41854903",
         avatar: "./images/115237913_p0.jpg",
-        bgImage: "./images/115237913_p2.jpg",  // <--- 修改这里：指定背景图片路径
-        bgColor: null,  // 背景图片优先，设为 null
-        musicName: "Water Drop - KARUT",  // 显示名称
-        musicSrc: "https://github.com/Lazy-nya/Lazy-nya.github.io/blob/main/music/Water%20Drop%20-%20KARUT.mp3"  // 实际文件路径
+        bgImage: "./images/115237913_p2.jpg",
+        bgColor: null,
+        // 音乐相关（网易云）
+        musicId: "2098473570",
+        musicName: "Water Drop - KARUT"
       };
 
       let profileData = {};
@@ -327,9 +340,9 @@
       const douyinLink = document.getElementById('douyinLink');
       const coolapkLink = document.getElementById('coolapkLink');
       
-      const audioPlayer = document.getElementById('audioPlayer');
+      const neteaseIframe = document.getElementById('neteasePlayer');
       const playPauseBtn = document.getElementById('playPauseBtn');
-      const musicInfo = document.getElementById('musicInfo');
+      const musicInfoDisplay = document.getElementById('musicInfo');
       
       const passwordModal = document.getElementById('passwordModal');
       const passwordInput = document.getElementById('passwordInput');
@@ -350,9 +363,11 @@
       const editGithub = document.getElementById('editGithub');
       const editDouyin = document.getElementById('editDouyin');
       const editCoolapk = document.getElementById('editCoolapk');
+      const editMusicId = document.getElementById('editMusicId');
       const editMusicName = document.getElementById('editMusicName');
-      const editMusicUpload = document.getElementById('editMusicUpload');
       const resetAllBtn = document.getElementById('resetAllBtn');
+
+      let isPlaying = false;
 
       function updateDateTime() {
         const now = new Date();
@@ -405,15 +420,22 @@
           bgLayer.style.backgroundColor = 'transparent';
         } else {
           bgLayer.style.backgroundImage = 'none';
-          bgLayer.style.backgroundColor = profileData.bgColor || defaultData.bgColor;
+          bgLayer.style.backgroundColor = profileData.bgColor || defaultData.bgColor || '#c9b8a8';
         }
         
-        musicInfo.textContent = profileData.musicName || "未选择音乐";
-        if (profileData.musicSrc) {
-          audioPlayer.src = profileData.musicSrc;
-        } else {
-          audioPlayer.src = '';
+        // 更新音乐信息
+        if (profileData.musicName) {
+          musicInfoDisplay.textContent = '准备播放：' + profileData.musicName;
         }
+        
+        // 更新网易云 iframe 的歌曲 ID
+        if (profileData.musicId) {
+          neteaseIframe.src = `https://music.163.com/outchain/player?type=2&id=${profileData.musicId}&auto=0&height=32`;
+        }
+        
+        // 重置播放状态
+        isPlaying = false;
+        playPauseBtn.innerHTML = '<i class="fa-solid fa-play"></i>';
       }
       
       function populateEditor() {
@@ -427,6 +449,7 @@
         editGithub.value = profileData.github || '';
         editDouyin.value = profileData.douyin || '';
         editCoolapk.value = profileData.coolapk || '';
+        editMusicId.value = profileData.musicId || '';
         editMusicName.value = profileData.musicName || '';
         editAvatarUrl.value = '';
         editBgUrl.value = '';
@@ -460,6 +483,7 @@
           { input: editGithub, key: 'github' },
           { input: editDouyin, key: 'douyin' },
           { input: editCoolapk, key: 'coolapk' },
+          { input: editMusicId, key: 'musicId' },
           { input: editMusicName, key: 'musicName' }
         ];
         fields.forEach(({input, key}) => {
@@ -587,27 +611,44 @@
           saveProfileToStorage();
           applyProfileToUI();
         });
-        
-        editMusicUpload.addEventListener('change', (e)=>{
-          if(e.target.files[0]) {
-            const file = e.target.files[0];
-            const url = URL.createObjectURL(file);
-            profileData.musicSrc = url;
-            profileData.musicName = file.name;
-            musicInfo.textContent = profileData.musicName;
-            audioPlayer.src = url;
-            saveProfileToStorage();
-            applyProfileToUI();
+
+        // ========== 网易云播放控制 ==========
+        playPauseBtn.addEventListener('click', function() {
+          if (!profileData.musicId) {
+            alert('请先在设置中配置网易云歌曲ID');
+            return;
+          }
+          
+          if (!isPlaying) {
+            // 播放：重新加载 iframe，开启自动播放
+            const baseUrl = `https://music.163.com/outchain/player?type=2&id=${profileData.musicId}`;
+            neteaseIframe.src = baseUrl + '&auto=1&height=32';
+            this.innerHTML = '<i class="fa-solid fa-pause"></i>';
+            if (profileData.musicName) {
+              musicInfoDisplay.textContent = ' 正在播放：' + profileData.musicName;
+            } else {
+              musicInfoDisplay.textContent = ' 正在播放...';
+            }
+            isPlaying = true;
+          } else {
+            // 暂停：重新加载 iframe，关闭自动播放
+            const baseUrl = `https://music.163.com/outchain/player?type=2&id=${profileData.musicId}`;
+            neteaseIframe.src = baseUrl + '&auto=0&height=32';
+            this.innerHTML = '<i class="fa-solid fa-play"></i>';
+            if (profileData.musicName) {
+              musicInfoDisplay.textContent = '已暂停：' + profileData.musicName;
+            } else {
+              musicInfoDisplay.textContent = '已暂停';
+            }
+            isPlaying = false;
           }
         });
-        
-        playPauseBtn.addEventListener('click', ()=>{
-          if(!audioPlayer.src) return alert('请先在设置中导入音乐');
-          if(audioPlayer.paused) { audioPlayer.play(); playPauseBtn.innerHTML='<i class="fa-solid fa-pause"></i>'; }
-          else { audioPlayer.pause(); playPauseBtn.innerHTML='<i class="fa-solid fa-play"></i>'; }
-        });
-        audioPlayer.addEventListener('ended', ()=>{
-          playPauseBtn.innerHTML='<i class="fa-solid fa-play"></i>';
+
+        // 页面加载完成后，预加载 iframe（不自动播放）
+        window.addEventListener('load', function() {
+          if (profileData.musicId) {
+            neteaseIframe.src = `https://music.163.com/outchain/player?type=2&id=${profileData.musicId}&auto=0&height=32`;
+          }
         });
       }
       
